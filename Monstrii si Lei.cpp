@@ -14,6 +14,7 @@ private:
     string name;
     string role;
 
+    // Functie de creat figuranti
     void createExtras()
     {
         ifstream file1;
@@ -21,7 +22,8 @@ private:
 
         if (!file1)
             throw "File does not exist!";
-
+        
+        // Testez daca deja i-am creat sa nu ii mai adaug inca o data
         string extra = "figurant";
         bool found_record = false;
         string field_one, field_two;
@@ -40,11 +42,13 @@ private:
         {
             int extras = 132;
 
+            // Baza de date pentru nume
             string last_name[15] = {
                 "Tanase", "Chitu", "Subtirica", "Onea", "Rosu", "Ungureanu", "Mironescu", "Rusu", "Neagu", "Mazilu", "Sivriu", "Titiriga",
                 "Filip", "Mustafa", "Burtoiu"
             };
 
+            // Baza de date pentru prenume
             string first_name[15] = {
                 "Theodor", "Cosmin", "Vlad", "Maria", "Ionut", "Cristian", "David", "Sergiu", "Alexandru", "Gabriela", "Bianca", "Tiberiu",
                 "Dragos", "Georgiana", "Alina"
@@ -60,6 +64,7 @@ private:
             if (!file)
                 throw "File does not exist!";
 
+            // Generare numar random de la 0 la 14 pentru a lua din vectorii de string un nume si un prenume si a-i adauga in fisierul cu toti membrii cast-ului
             for (i = 0; i < extras; i++)
             {
                 random_last_name = rand()%15;
@@ -72,6 +77,7 @@ private:
         }
     }
 
+    // Functie de asignat tip de monstru si de a calcula pretul pentru machiaje
     long assignMonster()
     {
         ifstream file1;
@@ -80,10 +86,12 @@ private:
         if (!file1)
             throw "File does not exist!";
 
+        // Baza de date pentru monstri
         string monster[5] = {
             "Vampir", "Varcolac", "Sirena", "Clarvazatori", "Om"
         };
 
+        // Vector de frecventa pentru tip de monstru pe care il initializez cu 0
         int number_of_monsters[5], i;
         for (i = 0; i < 5; i++)
             number_of_monsters[i] = 0;
@@ -92,6 +100,7 @@ private:
 
         int nr;
 
+        // Asignare tip monstru random si doar pentru actori, cascadori si figuranti
         while (getline(file1, name, ','))
         {
             getline(file1, role, '\n');
@@ -103,6 +112,7 @@ private:
             }
         }
 
+        // Calcul pret machiaje
         int preturi[5] = {230, 555, 345, 157, 55};
 
         int pret_monstrii[5];
@@ -117,6 +127,7 @@ private:
         return pret_total;
     }
 
+    // Functie pentru asignat diete si de calculat pretul meselor in functie de dieta
     long assignDiet()
     {
         ifstream file1;
@@ -125,12 +136,13 @@ private:
         if (!file1)
             throw "File does not exist!";
 
+        // Baza de date pentru dieta
         string diet[3] = {
             "Omnivorous", "Vegetarian", "Flexitarian"
         };
 
+        // Vector de frecventa pentru tip de dieta pe care il initializez cu 0
         int number_of_people[3];
-
         int i;
         for (i = 0; i < 3; i++)
             number_of_people[i] = 0;
@@ -139,6 +151,7 @@ private:
 
         int nr;
 
+        // Asignare tip dieta random si contorizat fiecare persoana ce fel de dieta are
         while (getline(file1, name, ','))
         {
             getline(file1, role, '\n');
@@ -147,6 +160,7 @@ private:
                 number_of_people[nr]++;
         }
 
+        // Calcul pret mese
         int pret_per_dieta[3] = {40, 33, 46};
         long pret_total = 0;
 
@@ -156,6 +170,7 @@ private:
         return pret_total;
     }
 
+    // Functie pentru calculat pretul pentru camerele din hotel
     long camere()
     {
         ifstream file;
@@ -164,6 +179,7 @@ private:
         if (!file)
             throw "File does not exist!";
 
+        // Contorizare figuranti si cast initial
         int nr_figuranti = 0;
         int nr_cast_initial = 0;
 
@@ -176,6 +192,7 @@ private:
             else nr_cast_initial++;
         }
 
+        // Calcul impartire pe camere
         int nr_camere_de_2;
         int nr_camere_de_3;
 
@@ -187,6 +204,7 @@ private:
         if (nr_figuranti%3 != 0)
             nr_camere_de_3++;
 
+        // Calcul pret camere
         int pret_camera_de_2 = 350;
         int pret_camera_de_3 = 420;
 
@@ -201,6 +219,7 @@ private:
     }
 
 public:
+    // Constructor pentru a crea caracterele extra
     Person()
     {
         try
@@ -213,6 +232,7 @@ public:
         }
     }
 
+    // Functii get pentru preturi
     long getMakeup()
     {
         return assignMonster();
@@ -237,6 +257,7 @@ private:
     int number_of_people = numarPersoane();
     int cost_of_a_bus = 5680;
 
+    // Contorizare numar de persoane totale participante
     int numarPersoane()
     {
         ifstream file;
@@ -254,6 +275,7 @@ private:
         return nr_persoane;
     }
 
+    // Functie pentru calcul drum dus-intors cu autocarul
     long busCost()
     {
         int number_of_buses = number_of_people/places_per_bus;
@@ -266,8 +288,10 @@ private:
         return 2*price_per_trip;
     }
 
+    // Functie de creare meniu pe 3 zile pentru fiecare tip de dieta
     void menu()
     {
+        // Baza de date pentru fiecare fel de mancare la fiecare dieta
         string supa_omnivori[3] = {
             "Ciorba radauteana", "Supa cu galuste", "Supa de pui a la grec"
         };
@@ -302,6 +326,7 @@ private:
 
         file<<"Omnivori"<<","<<"Vegetarieni"<<","<<"Flexitarieni"<<"\n";
 
+        // Afisare in fisier
         int i;
         for (i = 0; i < 3; i++)
             file<<"Ziua "<<i+1<<","<<"Ziua "<<i+1<<","<<"Ziua "<<i+1<<"\n"<<supa_omnivori[i]<<","<<supa_vegetarieni[i]<<","<<supa_flexitarieni[i]
@@ -311,6 +336,7 @@ private:
         file.close();
     }
 
+    // Functie pentru calculat pretul bauturii (apa, cafea, suc)
     float bautura()
     {
         ifstream file;
@@ -319,11 +345,13 @@ private:
         if (!file)
             throw "File does not exist!";
 
+        // Contorizare numar persoane
         int nr_persoane = 0;
         string line;
         while (getline(file, line))
             nr_persoane++;
 
+        // Calcul bautura (apa, cafea, suc)
         float litrii_apa = nr_persoane * 1;
         float litrii_cafea = nr_persoane * 0.5;
         float litrii_suc = nr_persoane * 0.8;
@@ -341,8 +369,10 @@ private:
         return pret_total;
     }
 
+    // Functie de calculat pretul pentru inchirierea castelului
     long inchiriereSpatiu(int zile)
     {
+        // Calcul
         int cost_per_zi = 10000;
         int numar_de_reduceri = zile/10;
         int reducere = 2;
@@ -353,6 +383,7 @@ private:
     }
 
 public:
+    // Constructor pentru creare meniu
     TVShow()
     {
         try
@@ -365,6 +396,7 @@ public:
         }
     }
 
+    // Functii get pentru preturi
     long getBus()
     {
         return busCost();
@@ -381,6 +413,7 @@ public:
     }
 };
 
+// Dictionar roman-englez pentru rolurile fiecarui membru
 map<string, string> translations {
         {"director", "director"},
         {"scriitor", "writer"},
@@ -411,6 +444,7 @@ map<string, string> translations {
         {"figurant", "extra"}
 };
 
+// Functie de traducere in functie de dictionar
 string translate(string word)
 {
     if (translations.count(word))
@@ -418,6 +452,7 @@ string translate(string word)
     return word;
 }
 
+// Functie de tradus csv numit Membrii
 void translateMembrii()
 {
     ifstream file;
@@ -445,6 +480,7 @@ void translateMembrii()
     file1.close();
 }
 
+// Functie de tradus csv numit Meniu
 void translateMeniu()
 {
     ofstream file;
@@ -470,6 +506,7 @@ void translateMeniu()
     file.close();
 }
 
+// Functie de tradus csv numit Costuri
 void translateCosturi()
 {
     ofstream file;
@@ -506,6 +543,7 @@ int main()
         cerr<<msg<<endl;
     }
 
+    // Calcul pentru perioade diferite si conversie din lei in dolari
     long mancare = p.getFood();
     long bautura = tv.getDrinks();
 
