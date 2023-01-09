@@ -249,7 +249,7 @@ public:
     }
 };
 
-class TVShow : private Person
+class TVShow
 {
 private:
     int places_per_bus = 50;
